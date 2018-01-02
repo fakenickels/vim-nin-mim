@@ -8,3 +8,7 @@ I recommend using with NVIM
 git clone https://github.com/grsabreu/vimit/ ~/.vim
 cp ~/.vim/vimrc ~/.vimrc
 ```
+
+# Setup
+Follow dein setup instructions
+https://github.com/Shougo/dein.vim#quick-start
