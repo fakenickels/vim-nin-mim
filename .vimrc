@@ -8,7 +8,7 @@ nmap <Leader>wq :wq<Cr>
 nmap <C-n> :noh<Cr>
 
 " Set default theme
-colorscheme pablo
+colorscheme darkblue
 
 " Send all yanking/deleting ops to clipboard
 set clipboard=unnamedplus
