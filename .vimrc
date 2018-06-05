@@ -7,9 +7,6 @@ nmap <Leader>wq :wq<Cr>
 " Clean up search highlights
 nmap <C-n> :noh<Cr>
 
-" Set default theme
-colorscheme darkblue
-
 " Send all yanking/deleting ops to clipboard
 set clipboard=unnamedplus
 
@@ -38,7 +35,7 @@ map <c-b> :CtrlPBuffer<cr>
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let NERDTreeShowHidden=0
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__', '\.bs.js$']
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
@@ -134,10 +131,6 @@ let g:ale_fixers = {
 \   'reason': ['merlin']
 \}
 
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
 set noshowmode
 set cmdheight=2
 
@@ -159,7 +152,7 @@ if dein#load_state('/Users/gabrielr.abreu/.vim/bundles')
 
   " Add or remove your plugins here:
   call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('grsabreu/neosnippet-snippets')
 
   " You can specify revision/branch/tag.
   call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
@@ -168,6 +161,8 @@ if dein#load_state('/Users/gabrielr.abreu/.vim/bundles')
   call dein#add('reasonml-editor/vim-reason-plus')
 
   call dein#add('Shougo/deoplete.nvim')
+
+  call dein#add('tyrannicaltoucan/vim-deep-space')
 
   " Required:
   call dein#end()
@@ -184,6 +179,13 @@ if dein#check_install()
 endif
 
 call deoplete#enable()
+
+" Deep space
+set background=dark
+set termguicolors
+colorscheme deep-space
+
+let g:dein#enable_notification = 1
 
 "End dein Scripts-------------------------
 
@@ -202,5 +204,20 @@ nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <C-k> :call LanguageClient_textDocument_formatting()<CR>
 
-" Make trailing space and tabs visibile
-:set listchars=tab:▒░,trail:▓
+" neosnippeet
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-l>     <Plug>(neosnippet_expand_or_jump)
+smap <C-l>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-l>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Linting/errors
+nmap <tab> :ALENext<Cr>
