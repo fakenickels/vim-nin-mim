@@ -28,14 +28,12 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
 let g:ctrlp_map = '<c-f>'
-map <leader>j :CtrlP<cr>
-map <c-b> :CtrlPBuffer<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let NERDTreeShowHidden=0
-let NERDTreeIgnore = ['\.pyc$', '__pycache__', '\.bs.js$']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
@@ -131,6 +129,10 @@ let g:ale_fixers = {
 \   'reason': ['merlin']
 \}
 
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
 set noshowmode
 set cmdheight=2
 
@@ -164,6 +166,25 @@ if dein#load_state('/Users/gabrielr.abreu/.vim/bundles')
 
   call dein#add('tyrannicaltoucan/vim-deep-space')
 
+  call dein#add('jparise/vim-graphql')
+
+  call dein#add('mbbill/undotree')
+
+  call dein#add('ap/vim-css-color')
+
+  call dein#add('prettier/vim-prettier', { 'build': 'yarn install' })
+
+  call dein#add('leafgarland/typescript-vim')
+
+  call dein#add('Xuyuanp/nerdtree-git-plugin')
+
+  call dein#add('rrethy/vim-illuminate')
+
+  call dein#add('mhinz/vim-startify')
+
+  call dein#add('junegunn/fzf')
+  call dein#add('junegunn/fzf.vim')
+
   " Required:
   call dein#end()
   call dein#save_state()
@@ -178,12 +199,12 @@ if dein#check_install()
   call dein#install()
 endif
 
-call deoplete#enable()
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#file#enable_buffer_path = 1
 
 " Deep space
 set background=dark
 set termguicolors
-colorscheme deep-space
 
 let g:dein#enable_notification = 1
 
@@ -192,11 +213,11 @@ let g:dein#enable_notification = 1
 " Language server
 
 set hidden
-
 let g:LanguageClient_serverCommands = {
-    \ 'reason': ['ocaml-language-server', '--stdio'],
+    \ 'reason': ['~/projects/astrocoders/reason-language-server/reason-language-server/reason-language-server.exe'],
     \ 'ocaml': ['ocaml-language-server', '--stdio'],
     \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'typescript': ['javascript-typescript-stdio'],
     \ }
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -219,5 +240,15 @@ xmap <C-l>     <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
+let NERDTreeIgnore = ['\.bs.js$']
+
 " Linting/errors
 nmap <tab> :ALENext<Cr>
+
+" Prettier
+let g:prettier#config#semi = 'false'
+let g:prettier#config#single_quote = 'true'
+
+
+" FZF
+map <leader>j :CtrlP<cr>
